@@ -16,8 +16,8 @@ class Card {
         if (opt.suit < 0 || opt.suit > 4 || opt.rank < 1 || opt.rank > 13) {
             throw new Error('param invalid');
         }
-        const suit = opt.suit;
-        const rank = opt.rank;
+        const suit = +opt.suit;
+        const rank = +opt.rank;
         this.getSuit = () => suit;
         this.getRank = () => rank;
     }

@@ -43,8 +43,8 @@ class Core {
          * @type {Card[][]}
          * @private
          */
-        this._hands = new Array(opt.playerCount);
-        for (let i = 0; i < opt.playerCount; i++) {
+        this._hands = new Array(this._playerCount);
+        for (let i = 0; i < this._playerCount; i++) {
             this._hands[i] = [];
         }
         /**

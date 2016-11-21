@@ -45,4 +45,48 @@ describe('stare/util', () => {
             assert.deepEqual(Util.isDoubleStraight([genCard(1, 3), genCard(1, 3), genCard(1, 4), genCard(1, 4), genCard(1, 5), genCard(1, 6), genCard(1, 5), genCard(1, 6), genCard(1, 7), genCard(1, 7)]), []);
         });
     });
+    describe('checkSet', () => {
+        it('single', () => {
+            assert.ok(Util.checkSet({
+                cards: [genCard(1, 1)],
+                numbers: [1],
+                pattern: 'isSingle'
+            }))
+        });
+        it('double', () => {
+            assert.ok(Util.checkSet({
+                cards: [genCard(1, 1), genCard(0, 1)],
+                numbers: [1, 1],
+                pattern: 'isDouble'
+            }))
+        });
+        it('triple', () => {
+            assert.ok(Util.checkSet({
+                cards: [genCard(1, 1), genCard(0, 2), genCard(2, 1)],
+                numbers: [1, 1, 1],
+                pattern: 'isTriple'
+            }))
+        });
+        it('quadruple', () => {
+            assert.ok(Util.checkSet({
+                cards: [genCard(1, 1), genCard(0, 2), genCard(2, 1), genCard(0, 1)],
+                numbers: [1, 1, 1, 1],
+                pattern: 'isQuadruple'
+            }))
+        });
+        it('single-straight', () => {
+            assert.ok(Util.checkSet({
+                cards: [genCard(1, 3), genCard(1, 4), genCard(1, 5)],
+                numbers: [3, 4, 5],
+                pattern: 'isSingleStraight'
+            }))
+        });
+        it('double-straight', () => {
+            assert.ok(Util.checkSet({
+                cards: [genCard(1, 3), genCard(0, 2), genCard(2, 4), genCard(0, 1)],
+                numbers: [3, 3, 4, 4],
+                pattern: 'isDoubleStraight'
+            }))
+        });
+    });
 });
