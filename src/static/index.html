@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+<body>
+<input class="J-input" type="text" title="msg">
+<button class="J-btn">send</button>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    !function() {
+        var socket = io.connect('http://localhost:8080');
+        socket.on('talk', function (data) {
+            console.log(data);
+        });
+        document.querySelector('.J-btn').addEventListener('click', function() {
+            var input = document.querySelector('.J-input');
+            console.log(input.value);
+            socket.emit('say', {value: input.value});
+            input.value = '';
+        });
+    }();
+</script>
+</body>
+</html>
