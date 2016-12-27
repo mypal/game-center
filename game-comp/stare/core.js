@@ -206,15 +206,16 @@ class Core {
     }
 
     showInfo() {
-        console.log('current:', this._currentPlayer, 'deck:', this._deck.getLeftLength());
-        console.log('last: ', this._lastCards && this._lastCards.player + ', ' + this._lastCards.numbers.join(' ') || '');
-        for (let i = 0; i < this._playerCount; i++) {
-            this.showHands(i);
-        }
+        console.log(JSON.stringify(this.getInfo(), null, 4));
     }
 
-    showHands(i) {
-        console.log(i, ':', this._hands[i].map(c => c.toString()).join(' '));
+    getInfo() {
+        return {
+            currentPlayer: this._currentPlayer,
+            deckCount: this._deck.getLeftLength(),
+            lastCards: this._lastCards,
+            hands: this._hands
+        };
     }
 }
 

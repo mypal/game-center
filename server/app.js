@@ -1,33 +1,54 @@
-const koa = require('koa'),
-    mount = require('koa-mount'),
-    router = require('koa-router')(),
+const Koa = require('koa'),
     logger = require('koa-logger'),
-    render = require('koa-swig'),
-    path = require('path');
+    router = require('koa-router')(),
+    send = require('koa-send'),
+    views = require('koa-views'),
+    bodyParser = require('koa-bodyparser'),
+    path = require('path'),
+    config = require('../common-config.json'),
+    routes = require('./routes'),
+    Stare = require('../game-comp/stare/core');
 
-var app = koa();
+let app = new Koa();
 
-app.context.render = render({
-    root: path.join(__dirname, '../src/static/'),
-    autoescape: false,
-    cache: false,
-    ext: 'html'
-});
 app.use(logger());
 
-var index = function *() {
-    yield* this.render('index');
-};
+app.use(bodyParser());
 
-router.get('/', index);
+const staticFileContent = config.prefix+'/dist/';
+app.use(async function (ctx, next) {
+    if (ctx.path.startsWith(staticFileContent)) {
+        await send(ctx, ctx.path.substr(staticFileContent.length), {
+            root: path.join(__dirname, '../dist')
+        });
+    } else {
+        await next();
+    }
+});
+
+router.prefix(config.prefix);
+for (let path in routes) {
+    if (routes.hasOwnProperty(path)) {
+        if (typeof routes[path] === 'function') {
+            router.get(path, routes[path]);
+        } else {
+            router[routes[path].method](path, routes[path].action);
+        }
+    }
+}
+
+app.use(views(path.join(__dirname, '../view'), {
+    extension: 'hbs',
+    map: {
+        hbs: 'handlebars'
+    }
+}));
+
 app.use(router.routes()).use(router.allowedMethods());
 
 const server = require('http').createServer(app.callback()),
     io = require('socket.io').listen(server);
 
-io.on('connection', (socket) => {
-    console.log('connect');
-    socket.broadcast.emit('talk', 'connect');
-});
+require('./rooms')(io);
 
 server.listen(8080);

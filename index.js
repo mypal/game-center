@@ -1,3 +1,7 @@
+require('babel-register');
+require('./server/app');
+
+/*
 const Stare = require('./game-comp/stare/core'),
     readline = require('readline'),
     Card = require('./game-comp/poker/card');
@@ -46,3 +50,4 @@ let query = () => {
 };
 
 query();
+*/

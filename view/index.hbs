@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 </head>
 <body>
@@ -12,13 +12,16 @@
 <script>
     !function() {
         var socket = io.connect('http://localhost:8080');
-        socket.on('deal', function (data) {
-            console.log('deal: ', data);
+        socket.on('update', function (data) {
+            console.log('update: ', JSON.stringify(data, null, 4));
         });
         document.querySelector('.J-btn').addEventListener('click', function() {
             var input = document.querySelector('.J-input');
             console.log(input.value);
-            socket.emit('say', input.value);
+            socket.emit('action', {
+                roomId: 0,
+                action: input.value
+            });
             input.value = '';
         });
     }();
