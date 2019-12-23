@@ -13,17 +13,17 @@
     "babel-preset-stage-3": "^6.17.0",
     "babel-register": "^6.18.0",
     "handlebars": "^4.1.2",
-    "immutable": "^3.8.1",
+    "immutable": "^4.0.0-rc.12",
     "koa": "2",
     "koa-bodyparser": "next",
     "koa-logger": "2",
-    "koa-onerror": "^3.0.1",
+    "koa-onerror": "^4.1.0",
     "koa-router": "7",
     "koa-send": "^3.2.0",
-    "koa-views": "next",
-    "socket.io": "^1.6.0"
+    "koa-views": "^5.2.1",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "mocha": "^3.1.2"
+    "mocha": "^6.2.2"
   }
 }
